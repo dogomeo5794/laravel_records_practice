@@ -1,0 +1,104 @@
+@baseurl = http://127.0.0.1:5001
+
+### this line will get the variable login from login request, no need to copy/paste token anymore
+@token = {{login.response.body.$.token}}
+
+### LOGIN
+# @name login
+POST {{baseurl}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "super.admin@example.com",
+    "password": "password",
+    "remember_me": true
+}
+
+### GET Method
+GET {{baseurl}}/api/user
+# Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### POST Method
+POST {{baseurl}}/api/v1/auth/register
+# Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "name": "Ronald Dogomeo",
+    "email": "admin@gmail.com",
+    "password": "password",
+    "confirm_password": "password",
+    "role": "admin"
+}
+
+### POST Multipart
+POST {{baseurl}}/api/
+Content-Type: multipart/form-data; boundary=postmultipartboundery
+# Authorization: Bearer {{token}}
+
+--postmultipartboundery
+Content-Disposition: form-data; name="product-name"
+
+value of product-name here
+--postmultipartboundery
+Content-Disposition: form-data; name="file"; filename="scanned2.jpg"
+Content-Type: image/jpeg
+
+< ./data/scanned2.jpg
+--postmultipartboundery--
+
+
+### List of posts
+GET {{baseurl}}/api/v1/records?page=1&size=5
+# Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+### Submit post
+POST {{baseurl}}/api/v1/records
+# Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+    "last_name": "Dalisay",
+    "first_name": "Cardo",
+    "middle_name": "",
+    "ext_name": "Jr.",
+    "date_of_birth": "1994-05-07",
+    "civil_status": "single",
+    "address": "Negros Occidental",
+    "contact": "09462547824"
+}
+
+### Select One Post
+GET {{baseurl}}/api/v1/records/bea9451a-d574-4ceb-a8b0-48e5828a0d47
+# Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+
+### Update Record
+PUT {{baseurl}}/api/v1/records/bea9451a-d574-4ceb-a8b0-48e5828a0d47
+# Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+    "last_name": "Dalisayx",
+    "first_name": "Cardox",
+    "middle_name": "",
+    "ext_name": "Jr.",
+    "date_of_birth": "1994-05-07",
+    "civil_status": "single",
+    "address": "Negros Occidental",
+    "contact": "09462547824"
+}
+
+
+### Delete Record
+DELETE  {{baseurl}}/api/v1/records/bea9451a-d574-4ceb-a8b0-48e5828a0d47
+# Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
